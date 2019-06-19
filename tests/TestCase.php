@@ -1,10 +1,10 @@
 <?php
 
-namespace yii2mod\cart\tests;
+namespace crocone\cart\tests;
 
 use Yii;
 use yii\helpers\ArrayHelper;
-use yii2mod\cart\tests\data\Session;
+use crocone\cart\tests\data\Session;
 
 /**
  * This is the base class for all yii framework unit tests.
@@ -47,7 +47,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
                     'class' => Session::class,
                 ],
                 'cart' => [
-                    'class' => 'yii2mod\cart\Cart',
+                    'class' => 'crocone\cart\Cart',
                 ],
             ],
         ], $config));

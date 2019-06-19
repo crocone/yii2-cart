@@ -1,13 +1,13 @@
 <?php
 
-namespace yii2mod\cart\storage;
+namespace crocone\cart\storage;
 
-use yii2mod\cart\Cart;
+use crocone\cart\Cart;
 
 /**
  * Interface StorageInterface
  *
- * @package yii2mod\cart\storage
+ * @package crocone\cart\storage
  */
 interface StorageInterface
 {

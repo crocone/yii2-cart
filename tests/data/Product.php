@@ -1,9 +1,9 @@
 <?php
 
-namespace yii2mod\cart\tests\data;
+namespace crocone\cart\tests\data;
 
 use yii\db\ActiveRecord;
-use yii2mod\cart\models\CartItemInterface;
+use crocone\cart\models\CartItemInterface;
 
 /**
  * Class Product

@@ -1,6 +1,6 @@
 <?php
 
-namespace yii2mod\cart\storage;
+namespace crocone\cart\storage;
 
 use Yii;
 use yii\base\BaseObject;
@@ -8,7 +8,7 @@ use yii\base\InvalidConfigException;
 use yii\db\Connection;
 use yii\db\Query;
 use yii\web\User;
-use yii2mod\cart\Cart;
+use crocone\cart\Cart;
 
 /**
  * Class DatabaseStorage is a database adapter for cart data storage.
@@ -16,7 +16,7 @@ use yii2mod\cart\Cart;
  * If userComponent is set, it tries to call getId() from the component and use the result as user identifier. If it
  * fails, or if $userComponent is not set, it will use sessionId as user identifier
  *
- * @package yii2mod\cart\storage
+ * @package crocone\cart\storage
  */
 class DatabaseStorage extends BaseObject implements StorageInterface
 {
@@ -94,7 +94,7 @@ class DatabaseStorage extends BaseObject implements StorageInterface
             ->where([$this->idField => $identifier]);
 
         if ($data = $query->createCommand($this->_db)->queryScalar()) {
-            $items = unserialize($data);
+            $items = unserialize(base64_decode($data));
         }
 
         return $items;
@@ -117,32 +117,33 @@ class DatabaseStorage extends BaseObject implements StorageInterface
     }
 
     /**
-     * @param \yii2mod\cart\Cart $cart
+     * @param \crocone\cart\Cart $cart
      */
     public function save(Cart $cart)
     {
         $identifier = $this->getIdentifier(Yii::$app->session->getId());
 
         $items = $cart->getItems();
-        $sessionData = serialize($items);
+	   
+        $sessionData = base64_encode(serialize($items));
 
         $command = $this->_db->createCommand();
 
         if (empty($items) && true === $this->deleteIfEmpty) {
             $command->delete($this->table, [$this->idField => $identifier]);
+	        $command->execute();
         } else {
-            $command->setSql("
-                REPLACE {{{$this->table}}}
-                SET
-                    {{{$this->dataField}}} = :val,
-                    {{{$this->idField}}} = :id
-            ")->bindValues([
-                ':id' => $identifier,
-                ':val' => $sessionData,
-            ]);
+        	$model = \common\models\Cart::findOne([$this->idField => $identifier]);
+        	if(!$model){
+        		$model = new \common\models\Cart();
+        		$model->sessionId = $identifier;
+	        }
+        	$model->cartData = $sessionData;
+        	if(!$model->save()){
+        		print_r($model->getErrors());
+	        }
         }
-
-        $command->execute();
+        
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace yii2mod\cart\tests\data;
+namespace crocone\cart\tests\data;
 
 class Session extends \yii\web\Session
 {

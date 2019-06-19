@@ -1,11 +1,11 @@
 <?php
 
-namespace yii2mod\cart\models;
+namespace crocone\cart\models;
 
 /**
  * All objects that can be added to the cart must implement this interface
  *
- * @package yii2mod\cart\models
+ * @package crocone\cart\models
  */
 interface CartItemInterface
 {
@@ -29,4 +29,8 @@ interface CartItemInterface
      * @return int|string
      */
     public function getUniqueId();
+    
+    
+    
+    public function getQuantity();
 }

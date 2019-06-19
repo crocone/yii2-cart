@@ -1,32 +1,32 @@
 <?php
 
-namespace yii2mod\cart;
+namespace crocone\cart;
 
 use Yii;
 use yii\base\Component;
 use yii\base\InvalidParamException;
-use yii2mod\cart\models\CartItemInterface;
-use yii2mod\cart\storage\StorageInterface;
+use crocone\cart\models\CartItemInterface;
+use crocone\cart\storage\StorageInterface;
 
 /**
  * Class Cart provides basic cart functionality (adding, removing, clearing, listing items). You can extend this class and
  * override it in the application configuration to extend/customize the functionality
  *
- * @package yii2mod\cart
+ * @package crocone\cart
  */
 class Cart extends Component
 {
     /**
      * @var string CartItemInterface class name
      */
-    const ITEM_PRODUCT = '\yii2mod\cart\models\CartItemInterface';
+    const ITEM_PRODUCT = '\crocone\cart\models\CartItemInterface';
 
     /**
      * Override this to provide custom (e.g. database) storage for cart data
      *
-     * @var string|\yii2mod\cart\storage\StorageInterface
+     * @var string|\crocone\cart\storage\StorageInterface
      */
-    public $storageClass = '\yii2mod\cart\storage\SessionStorage';
+    public $storageClass = '\crocone\cart\storage\SessionStorage';
 
     /**
      * @var array cart items
@@ -56,7 +56,7 @@ class Cart extends Component
      */
     public function reassign($sessionId, $userId)
     {
-        if (get_class($this->getStorage()) === 'yii2mod\cart\storage\DatabaseStorage') {
+        if (get_class($this->getStorage()) === 'crocone\cart\storage\DatabaseStorage') {
             if (!empty($this->items)) {
                 $storage = $this->getStorage();
                 $storage->reassign($sessionId, $userId);
@@ -113,11 +113,14 @@ class Cart extends Component
     }
 
     /**
-     * @param \yii2mod\cart\models\CartItemInterface $item
+     * @param \crocone\cart\models\CartItemInterface $item
      */
     protected function addItem(CartItemInterface $item)
     {
         $uniqueId = $item->getUniqueId();
+	    if(isset($this->items[$uniqueId])){
+		    $item->quantity = $this->items[$uniqueId]['quantity'] + $item->quantity;
+	    }
         $this->items[$uniqueId] = $item;
     }
 
@@ -131,13 +134,16 @@ class Cart extends Component
      *
      * @return $this
      */
-    public function remove($uniqueId, $save = true): self
+    public function remove($uniqueId, $quantity, $save = true): self
     {
         if (!isset($this->items[$uniqueId])) {
             throw new InvalidParamException('Item not found');
         }
-
-        unset($this->items[$uniqueId]);
+		if($quantity && $quantity > 0){
+			$this->items[$uniqueId]->quantity = $quantity;
+		}else{
+            unset($this->items[$uniqueId]);
+		}
 
         $save && $this->storage->save($this);
 
@@ -152,6 +158,17 @@ class Cart extends Component
     public function getCount($itemType = null): int
     {
         return count($this->getItems($itemType));
+    }
+    
+    
+    /**
+     * @param string $itemType If specified, only items of that type will be counted
+     *
+     * @return int
+     */
+    public function getSumm($itemType = null): int
+    {
+        return array_sum(array_column($this->getItems($itemType),'price'));
     }
 
     /**

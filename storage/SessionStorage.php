@@ -1,10 +1,10 @@
 <?php
 
-namespace yii2mod\cart\storage;
+namespace crocone\cart\storage;
 
 use Yii;
 use yii\base\BaseObject;
-use yii2mod\cart\Cart;
+use crocone\cart\Cart;
 
 /**
  * Class SessionStorage is a session adapter for cart data storage.
@@ -26,7 +26,7 @@ class SessionStorage extends BaseObject implements StorageInterface
         $cartData = [];
 
         if (false !== ($session = ($this->session->get($this->key, false)))) {
-            $cartData = unserialize($session);
+            $cartData = unserialize(base64_decode($session));
         }
 
         return $cartData;
@@ -37,7 +37,7 @@ class SessionStorage extends BaseObject implements StorageInterface
      */
     public function save(Cart $cart)
     {
-        $sessionData = serialize($cart->getItems());
+        $sessionData = base64_encode(serialize($cart->getItems()));
 
         $this->session->set($this->key, $sessionData);
     }

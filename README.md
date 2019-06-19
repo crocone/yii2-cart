@@ -9,9 +9,9 @@
 This extension adds shopping cart for Yii framework 2.0
 
 
-[![Latest Stable Version](https://poser.pugx.org/yii2mod/yii2-cart/v/stable)](https://packagist.org/packages/yii2mod/yii2-cart) [![Total Downloads](https://poser.pugx.org/yii2mod/yii2-cart/downloads)](https://packagist.org/packages/yii2mod/yii2-cart) [![License](https://poser.pugx.org/yii2mod/yii2-cart/license)](https://packagist.org/packages/yii2mod/yii2-cart)
-[![Build Status](https://travis-ci.org/yii2mod/yii2-cart.svg?branch=master)](https://travis-ci.org/yii2mod/yii2-cart)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yii2mod/yii2-cart/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/yii2mod/yii2-cart/?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/crocone/yii2-cart/v/stable)](https://packagist.org/packages/crocone/yii2-cart) [![Total Downloads](https://poser.pugx.org/crocone/yii2-cart/downloads)](https://packagist.org/packages/crocone/yii2-cart) [![License](https://poser.pugx.org/crocone/yii2-cart/license)](https://packagist.org/packages/crocone/yii2-cart)
+[![Build Status](https://travis-ci.org/crocone/yii2-cart.svg?branch=master)](https://travis-ci.org/crocone/yii2-cart)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/crocone/yii2-cart/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/crocone/yii2-cart/?branch=master)
 
 Installation
 ------------
@@ -21,13 +21,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist yii2mod/yii2-cart "*"
+php composer.phar require --prefer-dist crocone/yii2-cart "*"
 ```
 
 or add
 
 ```
-"yii2mod/yii2-cart": "*"
+"crocone/yii2-cart": "*"
 ```
 
 to the require section of your `composer.json` file.
@@ -40,10 +40,10 @@ return [
     //....
     'components' => [
         'cart' => [
-            'class' => 'yii2mod\cart\Cart',
+            'class' => 'crocone\cart\Cart',
             // you can change default storage class as following:
             'storageClass' => [
-                'class' => 'yii2mod\cart\storage\DatabaseStorage',
+                'class' => 'crocone\cart\storage\DatabaseStorage',
                 // you can also override some properties 
                 'deleteIfEmpty' => true
             ]
@@ -73,9 +73,9 @@ class ProductModel extends ActiveRecord implements CartItemInterface
 }
 ```
 
-> If you use the yii2mod\cart\storage\DatabaseStorage as ```storageClass``` then you need to apply the following migration:
+> If you use the crocone\cart\storage\DatabaseStorage as ```storageClass``` then you need to apply the following migration:
 ```php
-php yii migrate --migrationPath=@vendor/yii2mod/yii2-cart/migrations
+php yii migrate --migrationPath=@vendor/crocone/yii2-cart/migrations
 ```
 
 ### Using the shopping cart
@@ -103,7 +103,7 @@ $cart->clear();
 
 You can use the `CartGrid` widget for generate table with cart items as following:
 ```php
-<?php echo \yii2mod\cart\widgets\CartGrid::widget([
+<?php echo \crocone\cart\widgets\CartGrid::widget([
     // Some widget property maybe need to change. 
     'cartColumns' => [
         'id',

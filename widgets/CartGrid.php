@@ -1,17 +1,17 @@
 <?php
 
-namespace yii2mod\cart\widgets;
+namespace crocone\cart\widgets;
 
 use Yii;
 use yii\base\Widget;
 use yii\data\ArrayDataProvider;
 use yii\helpers\ArrayHelper;
-use yii2mod\cart\Cart;
+use crocone\cart\Cart;
 
 /**
  * Class Cart
  *
- * @package yii2mod\cart\widgets
+ * @package crocone\cart\widgets
  */
 class CartGrid extends Widget
 {

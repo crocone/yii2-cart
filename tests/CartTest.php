@@ -1,15 +1,15 @@
 <?php
 
-namespace yii2mod\cart\tests;
+namespace crocone\cart\tests;
 
 use Yii;
-use yii2mod\cart\storage\StorageInterface;
-use yii2mod\cart\tests\data\Product;
+use crocone\cart\storage\StorageInterface;
+use crocone\cart\tests\data\Product;
 
 /**
  * Class CartTest
  *
- * @package yii2mod\cart\tests
+ * @package crocone\cart\tests
  */
 class CartTest extends TestCase
 {
