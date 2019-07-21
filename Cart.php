@@ -166,7 +166,7 @@ class Cart extends Component
      *
      * @return int
      */
-    public function getSumm($itemType = null): int
+    public function getSumm($itemType = null)
     {
         return array_sum(array_column($this->getItems($itemType),'price'));
     }
