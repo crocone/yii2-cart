@@ -194,6 +194,34 @@ class Cart extends Component
 
         return $items;
     }
+   
+	
+    /**
+     * Returns all items of a given type from the cart and sort by owner
+     *
+     * @param string $itemType One of self::ITEM_ constants
+     *
+     * @return CartItemInterface[]
+     */	
+    public function getItemsByOwner($itemType = null): array {
+	    $items = $this->items;
+	    if (!is_null($itemType)) {
+		    $items = array_filter(
+			    $items,
+			    function ($item) use ($itemType) {
+				    /* @var $item CartItemInterface */
+				    return is_a($item, $itemType);
+			    }
+		    );
+	    }
+	    $arr = array();
+	    foreach ($items as $key => $item) {
+		    $arr[$item['owner']][$key] = $item;
+	    }
+	    ksort($arr, SORT_NUMERIC);
+	    
+	    return $arr;
+    }
 
     /**
      * Finds all items of type $itemType, sums the values of $attribute of all models and returns the sum.
