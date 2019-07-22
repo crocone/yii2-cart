@@ -170,6 +170,16 @@ class Cart extends Component
     {
         return array_sum(array_column($this->getItems($itemType),'price'));
     }
+	
+    /**
+     * @param string $itemType If specified, only items of that type will be counted
+     *
+     * @return int
+     */
+    public function getSummByOwner($owner,$itemType = null)
+    {
+        return array_sum(array_column($this->getItemsByOwner($itemType)[$owner],'price'));
+    }
 
     /**
      * Returns all items of a given type from the cart
