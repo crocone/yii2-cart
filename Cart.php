@@ -168,10 +168,10 @@ class Cart extends Component
      */
     public function getSumm($itemType = null)
     {
-        $items = $this->getItemsByOwner($itemType);
+        $items = $this->getItems($itemType);
     	$summ = 0;
     	foreach ($items as $item){
-    		$summ += ($item['new_price'] > 0 ? $item['new_price'] : $item['price']) *  $item['quantity'];
+    		$summ += ($item['new_price'] ? $item['new_price'] : $item['price']) *  $item['quantity'];
 	    }
     	 
         return $summ;
@@ -187,7 +187,7 @@ class Cart extends Component
     	$items = $this->getItemsByOwner($itemType)[$owner];
     	$summ = 0;
     	foreach ($items as $item){
-    		$summ += ($item['new_price'] > 0 ? $item['new_price'] : $item['price']) *  $item['quantity'];
+    		$summ += ($item['new_price'] ? $item['new_price'] : $item['price']) *  $item['quantity'];
 	    }
     	 
         return $summ;
