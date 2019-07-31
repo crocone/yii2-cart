@@ -194,6 +194,22 @@ class Cart extends Component
     }
 
     /**
+     * @param string $itemType If specified, only items of that type will be counted
+     *
+     * @return int
+     */
+    public function getWeightByOwner($owner,$itemType = null)
+    {
+    	$items = $this->getItemsByOwner($itemType)[$owner];
+    	$summ = 0;
+    	foreach ($items as $item){
+    		$summ += $item['weight'] * $item['quantity'];
+	    }
+    	 
+        return $summ;
+    }
+
+    /**
      * Returns all items of a given type from the cart
      *
      * @param string $itemType One of self::ITEM_ constants
