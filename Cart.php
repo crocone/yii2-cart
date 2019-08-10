@@ -203,7 +203,7 @@ class Cart extends Component
     	$items = $this->getItemsByOwner($itemType)[$owner];
     	$summ = 0;
     	foreach ($items as $item){
-    		$summ += $item['weight'] * $item['quantity'];
+    		$summ += is_int($item['weight']) ? $item['weight'] : 0 * $item['quantity'];
 	    }
     	 
         return $summ;
