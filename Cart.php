@@ -242,16 +242,7 @@ class Cart extends Component
      * @return CartItemInterface[]
      */	
     public function getItemsByOwner($itemType = null): array {
-	    $items = $this->items;
-	    if (!is_null($itemType)) {
-		    $items = array_filter(
-			    $items,
-			    function ($item) use ($itemType) {
-				    /* @var $item CartItemInterface */
-				    return is_a($item, $itemType);
-			    }
-		    );
-	    }
+	    $items = $this->items;	   
 	    $arr = array();
 	    foreach ($items as $key => $item) {
 		    $arr[$item['owner']][$key] = $item;
